@@ -30,7 +30,7 @@ export const getStaticProps = async (context) => {
   };
 };
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = async () => { // gets all the paths for all the articles available
     const res = await fetch(
         `https://jsonplaceholder.typicode.com/posts`
       );
@@ -42,10 +42,10 @@ export const getStaticPaths = async () => {
       const paths = ids.map(id => ({params: {id: id.toString()}}))
 
       return {
-        paths: { // we need a params object with ids for each article like so
-            params: {id: '1', id: '2'}
+        paths,
+        fallback: false // means if we go to something that doesn't exist in the data, it will take us to a 404 page
         }
       }
-}
+
 
 export default article;
