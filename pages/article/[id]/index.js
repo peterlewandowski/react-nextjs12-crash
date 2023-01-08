@@ -1,7 +1,7 @@
-//single article page
-
-import {server} from '../../../config'
 import Link from "next/link";
+//single article page
+import Meta from "../../../components/Meta";
+import { server } from "../../../config";
 import { useRouter } from "next/router";
 
 const article = ({ article }) => {
@@ -10,7 +10,9 @@ const article = ({ article }) => {
 
   return (
     <>
+      <Meta title={article.title} description={article.excerpt} />
       <h1>{article.title}</h1>
+      <p>{article.excerpt}</p>
       <p>{article.body}</p>
       <br />
       <Link href="/">Go Back</Link>
@@ -19,9 +21,7 @@ const article = ({ article }) => {
 };
 
 export const getStaticProps = async (context) => {
-  const res = await fetch(
-    `${server}/api/articles/${context.params.id}`
-  );
+  const res = await fetch(`${server}/api/articles/${context.params.id}`);
 
   const article = await res.json();
 
